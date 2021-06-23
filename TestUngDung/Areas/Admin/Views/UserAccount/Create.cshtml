@@ -1,0 +1,66 @@
+﻿@model ModelEF.Model.UserAccount
+
+@{
+    ViewBag.Title = "Quản lý tài khoản người dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<br>
+<h2>Tạo mới người dùng</h2>
+<hr />
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Nhập thông tin người dùng
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @using (Html.BeginForm("Create", "UserAccount", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="form-group col-md-12">
+                                    <label>@Html.LabelFor(model => model.UserName)</label>
+                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <label>@Html.LabelFor(model => model.Password)</label>
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <label>@Html.LabelFor(model => model.Status)</label>
+                                    @Html.DropDownListFor(model => model.Status, new List<SelectListItem>()
+                                    {
+                                        new SelectListItem(){Selected = true, Text="Active", Value="Active"},
+                                        new SelectListItem(){Selected = false, Text="Blocked", Value="Blocked"},
+                                    },new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-5 col-md-10">
+                                        <input type="submit" value="Tạo mới" class="btn btn-default" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div>
+    @Html.ActionLink("Trở lại", "Index")
+</div>
